@@ -14,7 +14,7 @@ public class User {
 
     private String username;
     private String password;
-    private String email;
+    private String mail;
     private boolean active;
     @Expose
     private String role;
@@ -51,12 +51,12 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMail() {
+        return mail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String mail) {
+        this.mail = mail;
     }
 
     public boolean isActive() {
