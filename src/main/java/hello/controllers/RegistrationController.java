@@ -18,7 +18,8 @@ public class RegistrationController {
     public String registry(@RequestBody String registryJson) {
         Gson gson = new Gson();
         User user = gson.fromJson(registryJson,User.class);
-        if(userRepository.findByUsername(user.getUsername())==null) {
+        User userInDb = userRepository.findByUsername(user.getUsername());
+        if(userInDb == null) {
             userRepository.save(user);
             return "ok";
         }
