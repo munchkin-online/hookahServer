@@ -7,6 +7,7 @@ import hello.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import hello.repository.UserRepository;
 
@@ -25,7 +26,7 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public String login(String loginJson){
+    public String login(@RequestBody String loginJson){
         Gson gson = new Gson();
         User userActual = gson.fromJson(loginJson,User.class);
         System.out.println(loginJson);
