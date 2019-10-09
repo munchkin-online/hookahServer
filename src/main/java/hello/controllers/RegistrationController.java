@@ -5,6 +5,7 @@ import hello.entities.User;
 import hello.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,7 +15,7 @@ public class RegistrationController {
     private UserRepository userRepository;
 
     @PostMapping("/registry")
-    public String registry(String registryJson) {
+    public String registry(@RequestBody String registryJson) {
         Gson gson = new Gson();
         User user = gson.fromJson(registryJson,User.class);
         if(userRepository.findByUsername(user.getUsername())==null) {
