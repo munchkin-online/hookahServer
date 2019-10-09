@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import hello.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import hello.repository.UserRepository;
@@ -15,19 +16,25 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    public LoginController(UserRepository userRepository){
-//        this.userRepository = userRepository;
-//    }
+    @Autowired
+    public LoginController(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+
 
     @PostMapping("/login")
     public String login(String loginJson){
         Gson gson = new Gson();
         User userActual = gson.fromJson(loginJson,User.class);
 
+        System.out.println(userRepository.findAll().toString());
 
         User userInDB = userRepository.findByUsername(userActual.getUsername());
 
+        Iterable<User> userIterable = userRepository.findAll();
+        if(userIterable.iterator().hasNext()){
+            System.out.println(userIterable.iterator().next().getUsername());
+        }
         gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String message;
         JsonObject jsonObject = new JsonObject();

@@ -11,30 +11,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ContextConfiguration(classes = TestConfig.class)
 public class LoginControllerTest {
 
 
     @Autowired
     private TestEntityManager entityManager;
-    private LoginController loginController;
+
     @Autowired
     private UserRepository userRepository;
+
+
+    @Autowired
+    LoginController loginController;
 
 
     @Before
     public void setUp(){
         TestEnviroment.fullUser(entityManager);
-//        loginController = new LoginController(userRepository);
     }
+
     @Test
     public void loginTest(){
         User user = new User();
-        user.setUsername("fedor");
-        user.setPassword("123");
+        user.setUsername("maxim");
+        user.setPassword("1234");
         Gson gson = new Gson();
         System.out.println(gson.toJson(user));
         String actual = loginController.login(gson.toJson(user));
