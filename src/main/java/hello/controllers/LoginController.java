@@ -15,7 +15,7 @@ import java.util.Iterator;
 @RestController
 public class LoginController {
 
-    @Autowired
+    //@Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -28,6 +28,7 @@ public class LoginController {
     public String login(String loginJson){
         Gson gson = new Gson();
         User userActual = gson.fromJson(loginJson,User.class);
+        System.out.println(loginJson);
 
         System.out.println(userRepository.findAll().toString());
         Iterable<User> userIterable = userRepository.findAll();
