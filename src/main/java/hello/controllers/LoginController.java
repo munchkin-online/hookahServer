@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import hello.repository.UserRepository;
 
+import java.util.Iterator;
+
 @RestController
 public class LoginController {
 
@@ -28,13 +30,13 @@ public class LoginController {
         User userActual = gson.fromJson(loginJson,User.class);
 
         System.out.println(userRepository.findAll().toString());
+        Iterable<User> userIterable = userRepository.findAll();
+        for ( Iterator<User> iterator = userIterable.iterator(); iterator.hasNext();){
+            System.out.println(iterator.next().getUsername());
+        }
 
         User userInDB = userRepository.findByUsername(userActual.getUsername());
 
-        Iterable<User> userIterable = userRepository.findAll();
-        if(userIterable.iterator().hasNext()){
-            System.out.println(userIterable.iterator().next().getUsername());
-        }
         gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String message;
         JsonObject jsonObject = new JsonObject();
