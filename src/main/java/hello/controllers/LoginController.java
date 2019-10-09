@@ -12,12 +12,13 @@ import hello.repository.UserRepository;
 @RestController
 public class LoginController {
 
-    private final UserRepository userRepository;
-
     @Autowired
-    public LoginController(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
+
+//    @Autowired
+//    public LoginController(UserRepository userRepository){
+//        this.userRepository = userRepository;
+//    }
 
     @PostMapping("/login")
     public String login(String loginJson){
