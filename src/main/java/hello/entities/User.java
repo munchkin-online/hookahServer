@@ -14,6 +14,7 @@ public class User {
 
     private String username;
     private String password;
+    @Column(name = "email")
     private String mail;
     private boolean active;
     @Expose
