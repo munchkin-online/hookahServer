@@ -5,29 +5,47 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import hello.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import hello.repository.UserRepository;
+
+import java.util.Iterator;
 
 @RestController
 public class LoginController {
 
-    @Autowired
+    //@Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    public LoginController(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+
+
     @PostMapping("/login")
-    public String login(String loginJson){
+    public String login(@RequestBody String loginJson){
         Gson gson = new Gson();
         User userActual = gson.fromJson(loginJson,User.class);
+        System.out.println(loginJson);
 
-        User userInDB = userRepository.findByUsername(loginJson);
+        System.out.println(userRepository.findAll().toString());
+        Iterable<User> userIterable = userRepository.findAll();
+        for ( Iterator<User> iterator = userIterable.iterator(); iterator.hasNext();){
+            System.out.println(iterator.next().getUsername());
+        }
+
+        User userInDB = userRepository.findByUsername(userActual.getUsername());
 
         gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String message;
         JsonObject jsonObject = new JsonObject();
         if(userInDB!=null&&userActual.getPassword().equals(userInDB.getPassword())){
             jsonObject.addProperty("status","right");
-            jsonObject.addProperty("role:",userInDB.getRole());
+            jsonObject.addProperty("role:", userInDB.getRole());
+            System.out.println(gson.toJson(jsonObject));
             message = gson.toJson(jsonObject);
             return message;
         }

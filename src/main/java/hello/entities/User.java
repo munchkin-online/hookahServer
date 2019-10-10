@@ -5,15 +5,16 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users",schema = "public")
+@Table(name = "users",schema = "hookah")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Integer Id;
 
     private String username;
     private String password;
+    @Column(name = "email")
     private String mail;
     private boolean active;
     @Expose
@@ -27,11 +28,11 @@ public class User {
         this.role = role;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         Id = id;
     }
 
