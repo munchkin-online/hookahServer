@@ -17,6 +17,7 @@ public class RegistrationController {
     @PostMapping("/registry")
     public String registry(@RequestBody String registryJson) {
         Gson gson = new Gson();
+        System.out.println(registryJson);
         User user = gson.fromJson(registryJson,User.class);
         User userInDb = userRepository.findByUsername(user.getUsername());
         if(userInDb == null) {
