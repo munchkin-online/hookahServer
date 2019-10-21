@@ -19,7 +19,7 @@ public class LoginController {
     private UserRepository userRepository;
 
     @Autowired
-    LoginController(UserRepository userRepository){
+    public LoginController(UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
@@ -34,7 +34,9 @@ public class LoginController {
 
         Gson gson = new Gson();
         User userActual = gson.fromJson(loginJson,User.class);
+
         User userInDB = userRepository.findByUsername(userActual.getUsername());//getting user in database with this login
+
         String message;
         JsonObject jsonObject = new JsonObject();
         if(userInDB!=null&&userActual.getPassword().equals(userInDB.getPassword())){ //checking user from db

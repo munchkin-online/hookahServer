@@ -1,11 +1,13 @@
 package hello.entities;
 
 import com.google.gson.annotations.Expose;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users",schema = "hookah")
+@Table(name = "users", schema = "hookah")
 public class User {
 
     @Id
