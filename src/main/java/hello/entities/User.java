@@ -1,8 +1,8 @@
 package hello.entities;
 
 import com.google.gson.annotations.Expose;
-import lombok.Getter;
-import lombok.Setter;
+//import lombok.Getter;
+//import lombok.Setter;
 
 import javax.persistence.*;
 
