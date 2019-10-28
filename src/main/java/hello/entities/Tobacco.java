@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tobacco", schema = "hookah")
-
 public class Tobacco {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
