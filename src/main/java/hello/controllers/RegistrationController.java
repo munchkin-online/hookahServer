@@ -3,6 +3,7 @@ package hello.controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import hello.entities.User;
+import hello.helper.Status;
 import hello.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,23 @@ public class RegistrationController {
         User userInDb = userRepository.findByUsername(user.getUsername());
         JsonObject jsonObject = new JsonObject();
         String message;
+        Integer status;
         if(userInDb == null) {
             log.info("add user to database");
             user.setRole("guest");
             userRepository.save(user);
             message = "User registered";
+            status = Status.OK_STATUS.getStatusCode();
         }else{
             message = "User already exist";
+            status = Status.BAD_STATUS.getStatusCode();
         }
+
+        jsonObject.addProperty("status",status);
         jsonObject.addProperty("message",message);
-        log.info("return to client={}",jsonObject.toString());
-        return jsonObject.toString();
+        String jsonToClient = jsonObject.toString();
+
+        log.info("return to client={}", jsonToClient);
+        return jsonToClient;
     }
 }

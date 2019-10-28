@@ -3,6 +3,7 @@ package hello.controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import hello.entities.Tobacco;
+import hello.helper.Status;
 import hello.repository.TobaccoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,10 @@ public class AddTobaccoController {
         if(tobaccoInDB == null) {
             log.info("add tobacco to database");
             tobaccoRepository.save(tobaccoActual);
-            status = 1;
+            status = Status.OK_STATUS.getStatusCode();
             message = "Add Tobacco";
         }else{
-            status = 2;
+            status = Status.BAD_STATUS.getStatusCode();
             message = "Tobacco already exist";
         }
 
@@ -51,8 +52,9 @@ public class AddTobaccoController {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status",status);
         jsonObject.addProperty("message", message);
-        message = jsonObject.toString();
-        log.info("return to client={}", message);
-        return message;
+
+        String jsonToClient = jsonObject.toString();
+        log.info("return to client={}", jsonToClient);
+        return jsonToClient;
     }
 }
