@@ -13,7 +13,7 @@ public class TestConfig {
     private UserRepository userRepository;
 
     @Bean
-    public LoginController getLoginController(){
-        return new LoginController(userRepository);
+    public UserController getLoginController(){
+        return new UserController(userRepository);
     }
 }
