@@ -35,9 +35,6 @@ public class TobaccoController {
     @PostMapping("/tobacco/list")
     public String getListOfTobacco(){
         log.info("request to get all tobaccos");
-        List<Tobacco> tobaccoList = new ArrayList<>();
-        Iterable<Tobacco> iterable = tobaccoRepository.findAll();
-        iterable.forEach(tobaccoList::add);
         return getTobbacoList();
     }
 
