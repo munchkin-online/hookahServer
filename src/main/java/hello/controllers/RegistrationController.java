@@ -32,7 +32,7 @@ public class RegistrationController {
         Integer status;
         if(userInDb == null) {
             log.info("add user to database");
-            user.setRole("guest");
+            user.setRole("new");
             userRepository.save(user);
             message = "User registered";
             status = Status.OK_STATUS.getStatusCode();

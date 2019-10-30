@@ -11,29 +11,47 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @Slf4j
-public class AddTobaccoController {
+public class TobaccoController {
 
     private TobaccoRepository tobaccoRepository;
+    private Gson gson = new Gson();
     @Autowired
-    public AddTobaccoController(TobaccoRepository tobaccoRepository){
+    public TobaccoController(TobaccoRepository tobaccoRepository){
         this.tobaccoRepository = tobaccoRepository;
     }
 
-    @PostMapping("/tobacco")
-    public String tobacco(@RequestBody String loginJson){
-        log.info("tobacco request, info={}",loginJson);
-        return addTobacco(loginJson);
+    @PostMapping("/tobacco/add")
+    public String add(@RequestBody String tobaccoJson){
+        log.info("tobacco request, info={}",tobaccoJson);
+        return addTobacco(tobaccoJson);
     }
 
-    private String addTobacco(String loginJson){
 
-        Gson gson = new Gson();
+    @PostMapping("/tobacco/list")
+    public String getListOfTobacco(){
+        log.info("request to get all tobaccos");
+        List<Tobacco> tobaccoList = new ArrayList<>();
+        Iterable<Tobacco> iterable = tobaccoRepository.findAll();
+        iterable.forEach(tobaccoList::add);
+        return getTobbacoList();
+    }
 
-        Tobacco tobaccoActual = gson.fromJson(loginJson,Tobacco.class);
+
+    private String getTobbacoList(){
+        List<Tobacco> tobaccoList = new ArrayList<>();
+        Iterable<Tobacco> iterable = tobaccoRepository.findAll();
+        iterable.forEach(tobaccoList::add);
+        return gson.toJson(tobaccoList);
+    }
+    private String addTobacco(String tobaccoJson){
+
+        Tobacco tobaccoActual = gson.fromJson(tobaccoJson,Tobacco.class);
         Tobacco tobaccoInDB = tobaccoRepository.findByLabel(tobaccoActual.getLabel());
-
 
         String message;
         int status;
@@ -47,7 +65,6 @@ public class AddTobaccoController {
             status = Status.BAD_STATUS.getStatusCode();
             message = "Tobacco already exist";
         }
-
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status",status);
