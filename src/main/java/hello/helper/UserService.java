@@ -42,29 +42,35 @@ public class UserService {
     public String loginCheck(String loginJson){
 
         gson = new Gson();
-        User userActual = gson.fromJson(loginJson,User.class);
+        User user = gson.fromJson(loginJson,User.class);
 
-        User userInDB = userRepository.findByUsername(userActual.getUsername());//getting user in database with this login
 
-        String message = "something go wrong";
-        Integer status = Status.BAD_STATUS.getStatusCode();
-        if(userInDB!=null&&userActual.getPassword().equals(userInDB.getPassword())){ //checking user from db
+        String message;
+        Integer status;
+        if(userRepository.existsUserByUsernameAndPassword(user.getUsername(),user.getPassword())){ //checking user from db
             message = "Login successful";
+            user = userRepository.findByUsername(user.getUsername());
             status = Status.OK_STATUS.getStatusCode();
-            jsonObject.addProperty("role", userInDB.getRole());
             log.info("login right");
-        }
-        if(userInDB==null) {
-            message = "user does not exist, create account first";
+            return getJsonStringWithUser(user, message, status);
+        } else {
+            message = "wrong login/password or user does not exist";
             status = Status.BAD_STATUS.getStatusCode();
-            log.info("user {} does not exist",userActual.getUsername());
-        }else if(!userInDB.getPassword().equals(userActual.getPassword())){
-            message = "wrong login/password";
-            status = Status.BAD_STATUS.getStatusCode();
-            log.info("wrong password for user {}",userActual.getUsername());
+            log.info("wrong password for user {}",user.getUsername());
+            return getJsonString(message, status);
         }
+    }
 
-        return getJsonString(message, status);
+    private String getJsonStringWithUser(User user, String message, Integer status) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("status",status);
+        jsonObject.addProperty("message",message);
+
+        jsonObject.add("user",gson.toJsonTree(user));
+        String jsonToClient = jsonObject.toString();
+        log.info("return to client={}", jsonToClient);
+
+        return jsonToClient;
     }
 
 
@@ -77,13 +83,7 @@ public class UserService {
             status = Status.OK_STATUS.getStatusCode();
             message = "user exists";
         }
-        jsonObject.addProperty("status",status);
-        jsonObject.addProperty("message",message);
-        jsonObject.add("user",gson.toJsonTree(user));
-        String jsonToClient = jsonObject.toString();
-        log.info("return to client={}", jsonToClient);
-
-        return jsonToClient;
+        return getJsonStringWithUser(user, message, status);
     }
 
     public String changeUserRole(String roleJson){
