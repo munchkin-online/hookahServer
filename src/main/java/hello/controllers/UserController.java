@@ -39,7 +39,8 @@ public class UserController {
     }
 
     @PostMapping("/user/status")
-    public String status(@RequestBody String statusJson){
-        return null;
+    public String status(@RequestBody String roleJson){
+        log.info("user role update request, info={}",roleJson);
+        return userService.changeUserRole(roleJson);
     }
 }

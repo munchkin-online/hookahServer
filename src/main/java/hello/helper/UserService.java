@@ -36,13 +36,9 @@ public class UserService {
             status = Status.BAD_STATUS.getStatusCode();
         }
 
-        jsonObject.addProperty("status",status);
-        jsonObject.addProperty("message",message);
-        String jsonToClient = jsonObject.toString();
-
-        log.info("return to client={}", jsonToClient);
-        return jsonToClient;
+        return getJsonString(message, status);
     }
+
 
     public String loginCheck(String loginJson){
 
@@ -69,12 +65,7 @@ public class UserService {
             log.info("wrong password for user {}",userActual.getUsername());
         }
 
-        jsonObject.addProperty("status",status);
-        jsonObject.addProperty("message",message);
-        String jsonToClient = jsonObject.toString();
-
-        log.info("return to client={}", jsonToClient);
-        return jsonToClient;
+        return getJsonString(message, status);
     }
 
 
@@ -90,6 +81,33 @@ public class UserService {
         jsonObject.addProperty("status",status);
         jsonObject.addProperty("message",message);
         jsonObject.add("user",gson.toJsonTree(user));
-        return jsonObject.toString();
+        String jsonToClient = jsonObject.toString();
+        log.info("return to client={}", jsonToClient);
+
+        return jsonToClient;
+    }
+
+    public String changeUserRole(String roleJson){
+        User userFromClient = gson.fromJson(roleJson,User.class);
+        String message = "user does not exist";
+        Integer status = Status.BAD_STATUS.getStatusCode();
+        if(userRepository.existsUserByUsername(userFromClient.getUsername())){
+            User user = userRepository.findByUsername(userFromClient.getUsername());
+            user.setRole(userFromClient.getRole());
+            userRepository.save(user);
+            status = Status.OK_STATUS.getStatusCode();
+            message = "role has been updated";
+        }
+
+        return getJsonString(message, status);
+    }
+
+    private String getJsonString(String message, Integer status) {
+        jsonObject.addProperty("status",status);
+        jsonObject.addProperty("message",message);
+        String jsonToClient = jsonObject.toString();
+
+        log.info("return to client={}", jsonToClient);
+        return jsonToClient;
     }
 }
