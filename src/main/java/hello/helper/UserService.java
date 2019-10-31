@@ -3,7 +3,6 @@ package hello.helper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import hello.entities.Answer;
 import hello.entities.User;
 import hello.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,6 @@ public class UserService {
 
     private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     private JsonObject jsonObject = new JsonObject();
-    private Answer answer;
 
     public String checkRegistration(String registrationJson){
         User user = gson.fromJson(registrationJson,User.class);
@@ -38,8 +36,9 @@ public class UserService {
             status = Status.BAD_STATUS.getStatusCode();
         }
 
-        answer = new Answer(message,status);
-        String jsonToClient = gson.toJson(answer);
+        jsonObject.addProperty("status",status);
+        jsonObject.addProperty("message",message);
+        String jsonToClient = jsonObject.toString();
 
         log.info("return to client={}", jsonToClient);
         return jsonToClient;
@@ -57,6 +56,7 @@ public class UserService {
         if(userInDB!=null&&userActual.getPassword().equals(userInDB.getPassword())){ //checking user from db
             message = "Login successful";
             status = Status.OK_STATUS.getStatusCode();
+            jsonObject.addProperty("role", userInDB.getRole());
             log.info("login right");
         }
         if(userInDB==null) {
@@ -69,8 +69,9 @@ public class UserService {
             log.info("wrong password for user {}",userActual.getUsername());
         }
 
-        answer = new Answer(message,status,userInDB);
-        String jsonToClient = gson.toJson(answer);
+        jsonObject.addProperty("status",status);
+        jsonObject.addProperty("message",message);
+        String jsonToClient = jsonObject.toString();
 
         log.info("return to client={}", jsonToClient);
         return jsonToClient;
@@ -86,9 +87,9 @@ public class UserService {
             status = Status.OK_STATUS.getStatusCode();
             message = "user exists";
         }
-        answer = new Answer(message,status,user);
-        String jsonToClient = gson.toJson(answer);
-        log.info("return to client={}",jsonToClient);
-        return jsonToClient;
+        jsonObject.addProperty("status",status);
+        jsonObject.addProperty("message",message);
+        jsonObject.add("user",gson.toJsonTree(user));
+        return jsonObject.toString();
     }
 }
