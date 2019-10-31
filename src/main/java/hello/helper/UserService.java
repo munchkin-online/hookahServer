@@ -41,10 +41,7 @@ public class UserService {
 
     public String loginCheck(String loginJson){
 
-        gson = new Gson();
         User user = gson.fromJson(loginJson,User.class);
-
-
         String message;
         Integer status;
         if(userRepository.existsUserByUsernameAndPassword(user.getUsername(),user.getPassword())){ //checking user from db
