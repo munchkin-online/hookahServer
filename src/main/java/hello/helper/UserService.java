@@ -17,7 +17,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    private Gson gson = new Gson();
 
     public String checkRegistration(String registrationJson){
         User user = gson.fromJson(registrationJson,User.class);

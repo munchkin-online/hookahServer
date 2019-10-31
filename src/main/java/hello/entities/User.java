@@ -16,6 +16,7 @@ public class User {
 
     @Expose
     private String username;
+    @Expose(serialize = false, deserialize = true)
     private String password;
     @Column(name = "email")
     @Expose
