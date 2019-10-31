@@ -34,6 +34,7 @@ public class UserController {
 
     @PostMapping("/user/info")
     public String info(@RequestBody String infoJson){
+        log.info("user info request, info={}",infoJson);
         return userService.getUserInfo(infoJson);
     }
 
