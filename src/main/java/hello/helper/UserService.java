@@ -18,7 +18,6 @@ public class UserService {
     private UserRepository userRepository;
 
     private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-    private JsonObject jsonObject = new JsonObject();
 
     public String checkRegistration(String registrationJson){
         User user = gson.fromJson(registrationJson,User.class);
@@ -98,11 +97,11 @@ public class UserService {
             status = Status.OK_STATUS.getStatusCode();
             message = "role has been updated";
         }
-
         return getJsonString(message, status);
     }
 
     private String getJsonString(String message, Integer status) {
+        JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status",status);
         jsonObject.addProperty("message",message);
         String jsonToClient = jsonObject.toString();
