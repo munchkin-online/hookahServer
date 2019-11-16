@@ -4,12 +4,12 @@ package hello.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "zabivs", schema = "hookah")
+@Table(name = "zabiv", schema = "hookah")
 public class Zabiv {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_zabiv;
+    private Integer Id;
 
     private String name;
     private int numofflavours;
@@ -17,12 +17,12 @@ public class Zabiv {
     private int flavour2;
     private int flavour3;
 
-    public int getId_zabiv() {
-        return id_zabiv;
+    public Integer getId() {
+        return Id;
     }
 
-    public void setId_zabiv(int id_zabiv) {
-        this.id_zabiv = id_zabiv;
+    public void setId(Integer id) {
+        Id = id;
     }
 
     public String getName() {
@@ -65,3 +65,4 @@ public class Zabiv {
         this.flavour3 = flavour3;
     }
 }
+

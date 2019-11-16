@@ -3,9 +3,10 @@ package hello.entities;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
-@Table(name = "orders", schema = "hookah")
+@Table(name = "order", schema = "hookah")
 public class Order {
 
     @Id
@@ -16,7 +17,9 @@ public class Order {
     @Column(name = "guestname")
     private String guestName;
     private String comments;
-    //private List<Zabiv> order = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<Zabiv> order = new ArrayList<>();
     @Expose
     private String status;
 
@@ -52,13 +55,13 @@ public class Order {
         this.comments = comments;
     }
 
-    /*public List<Zabiv> getOrder() {
+    public List<Zabiv> getOrder() {
         return order;
     }
 
     public void setOrder(List<Zabiv> order) {
         this.order = order;
-    }*/
+    }
 
     public String getStatus() {
         return status;
