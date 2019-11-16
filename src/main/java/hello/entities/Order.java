@@ -3,13 +3,12 @@ package hello.entities;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.util.*;
 
 @Entity
 @Table(name = "orders", schema = "hookah")
 public class Order {
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 

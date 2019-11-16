@@ -1,6 +1,10 @@
 package hello.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import hello.entities.Order;
 import hello.helper.OrderService;
+import hello.helper.Status;
 import hello.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class OrderController {
 
-
+    private OrderRepository orderRepository;
+    //OrderService orderService;
     @Autowired
-    OrderService orderService;
+    public OrderController(OrderRepository orderRepository){
+        this.orderRepository = orderRepository;
+    }
+
 
     @PostMapping("/order/add")
     public String add(@RequestBody String orderJson){
         log.info("order request info = {" + orderJson + "}");
-        return orderService.addOrder(orderJson);
+        return addOrder(orderJson);
     }
 
     @PostMapping("/order/list")
@@ -42,6 +50,30 @@ public class OrderController {
         log.info("request to close order, info = {" + orderJson + "}");
 //        TODO: сделать закрытие заказа - удаление из таблички заказы и возможно перевод в историю
         return "closeOrder";
+    }
+
+    private String addOrder(String orderJson){
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        Order order = gson.fromJson(orderJson, Order.class);
+        String message;
+        int status;
+        try{
+            order.setStatus("new");
+            orderRepository.save(order);
+            log.info("add order to database");
+            message = "add order to database";
+            status = Status.OK_STATUS.getStatusCode();
+        } catch (Exception e){
+            log.info("added order to database - Failed, Error = " + e);
+            message = "added order to database - Failed, Error = " + e;
+            status = Status.BAD_STATUS.getStatusCode();
+        }
+        jsonObject.addProperty("status",status);
+        jsonObject.addProperty("message",message);
+        String jsonToClient = jsonObject.toString();
+        log.info("return to client={", jsonToClient + "}");
+        return jsonToClient;
     }
 
 }
