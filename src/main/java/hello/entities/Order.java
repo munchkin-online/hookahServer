@@ -13,6 +13,7 @@ public class Order {
     private Integer Id;
 
     private int cost;
+    @Column(name = "guestname")
     private String guestName;
     private String comments;
     //private List<Zabiv> order = new ArrayList<>();
