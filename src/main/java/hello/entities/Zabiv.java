@@ -1,11 +1,29 @@
 package hello.entities;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "zabivs", schema = "hookah")
 public class Zabiv {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_zabiv;
+
     private String name;
     private int numofflavours;
     private int flavour1;
     private int flavour2;
     private int flavour3;
+
+    public int getId_zabiv() {
+        return id_zabiv;
+    }
+
+    public void setId_zabiv(int id_zabiv) {
+        this.id_zabiv = id_zabiv;
+    }
 
     public String getName() {
         return name;

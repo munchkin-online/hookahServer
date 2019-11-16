@@ -2,11 +2,11 @@ package hello.entities;
 
 import com.google.gson.annotations.Expose;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
+@Table(name = "orders", schema = "hookah")
 public class Order {
 
     @javax.persistence.Id
@@ -16,9 +16,17 @@ public class Order {
     private int cost;
     private String guestName;
     private String comments;
-    private List<Zabiv> order = new ArrayList<>();
+    //private List<Zabiv> order = new ArrayList<>();
     @Expose
     private String status;
+
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
+    }
 
     public int getCost() {
         return cost;
@@ -44,13 +52,13 @@ public class Order {
         this.comments = comments;
     }
 
-    public List<Zabiv> getOrder() {
+    /*public List<Zabiv> getOrder() {
         return order;
     }
 
     public void setOrder(List<Zabiv> order) {
         this.order = order;
-    }
+    }*/
 
     public String getStatus() {
         return status;

@@ -19,7 +19,7 @@ public class OrderController {
     @PostMapping("/order/add")
     public String add(@RequestBody String orderJson){
         log.info("order request info = {" + orderJson + "}");
-        return "addOrder";
+        return orderService.addOrder(orderJson);
     }
 
     @PostMapping("/order/list")
@@ -28,6 +28,7 @@ public class OrderController {
 //        TODO: возвращать все заказы со статусом не в работе
         return "getList";
     }
+    // new - заказ создан; work - заказ в работе; end - работа с заказом выполнена
 
     @PostMapping("/order/info")
     public String info(@RequestBody String orderJson){
@@ -38,7 +39,7 @@ public class OrderController {
 
     @PostMapping("/order/close")
     public String closeOrder(@RequestBody String orderJson){
-        log.info("request to close order, info = {" + "}");
+        log.info("request to close order, info = {" + orderJson + "}");
 //        TODO: сделать закрытие заказа - удаление из таблички заказы и возможно перевод в историю
         return "closeOrder";
     }
