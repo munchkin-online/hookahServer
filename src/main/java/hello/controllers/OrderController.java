@@ -75,18 +75,18 @@ public class OrderController {
                 Zabiv zabiv = listZabiv.get(i);
                 List<Tobacco> listTobacco = zabiv.getFlavours();
                 if (listTobacco.size() == 1){
-                    zabiv.setFlavour1(listTobacco.get(0).getFlavor());
-                    zabiv.setFlavour2("no");
-                    zabiv.setFlavour3("no");
+                    zabiv.setId1(listTobacco.get(0).getId());
+                    zabiv.setId2(-1);
+                    zabiv.setId3(-1);
                 } else if (listTobacco.size() == 2) {
-                        zabiv.setFlavour1(listTobacco.get(0).getFlavor());
-                        zabiv.setFlavour2(listTobacco.get(1).getFlavor());
-                        zabiv.setFlavour3("no");
+                        zabiv.setId1(listTobacco.get(0).getId());
+                        zabiv.setId2(listTobacco.get(1).getId());
+                        zabiv.setId3(-1);
                     }
                     else if (listTobacco.size() == 3) {
-                            zabiv.setFlavour1(listTobacco.get(0).getFlavor());
-                            zabiv.setFlavour2(listTobacco.get(1).getFlavor());
-                            zabiv.setFlavour3(listTobacco.get(2).getFlavor());
+                            zabiv.setId1(listTobacco.get(0).getId());
+                            zabiv.setId2(listTobacco.get(1).getId());
+                            zabiv.setId3(listTobacco.get(2).getId());
                     }
                 listZabiv.set(i,zabiv);
             }
@@ -118,16 +118,16 @@ public class OrderController {
             for (int j = 0; j < listZabiv.size(); j++) {
                 Zabiv zabiv = listZabiv.get(j);
                 List<Tobacco> listTobacco = zabiv.getFlavours();
-                if (!zabiv.getFlavour1().equals("no")){
-                    Tobacco tobacco = tobaccoRepository.findByFlavor(zabiv.getFlavour1());
+                if (zabiv.getId1()>0){
+                    Tobacco tobacco = tobaccoRepository.findTobaccoById(zabiv.getId1());
                     listTobacco.add(tobacco);
                 }
-                if (!zabiv.getFlavour2().equals("no")){
-                    Tobacco tobacco = tobaccoRepository.findByFlavor(zabiv.getFlavour2());
+                if (zabiv.getId2()>0){
+                    Tobacco tobacco = tobaccoRepository.findTobaccoById(zabiv.getId2());
                     listTobacco.add(tobacco);
                 }
-                if (!zabiv.getFlavour3().equals("no")){
-                    Tobacco tobacco = tobaccoRepository.findByFlavor(zabiv.getFlavour3());
+                if (zabiv.getId3()>0){
+                    Tobacco tobacco = tobaccoRepository.findTobaccoById(zabiv.getId3());
                     listTobacco.add(tobacco);
                 }
                 zabiv.setFlavours(listTobacco);
