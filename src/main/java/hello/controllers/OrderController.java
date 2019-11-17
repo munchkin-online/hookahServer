@@ -70,20 +70,20 @@ public class OrderController {
         try{
             order.setStatus("new");
             List<Zabiv> listZabiv = order.getOrder();
-            // узнаем сколько табаков в листе и их id записываем в класс
-            for (int i = 0; i < listZabiv.size(); i ++){
-                Zabiv zabiv = listZabiv.get(i);
-                List<Tobacco> listTobacco = zabiv.getFlavours();
-                if (listTobacco.size() == 1){
+            // узнаем сколько табаков в листе и их id записываем в класс:
+            for (int i = 0; i < listZabiv.size(); i ++){ //для каждой забивки (помним номер)
+                Zabiv zabiv = listZabiv.get(i); //достаем забивку из листа
+                List<Tobacco> listTobacco = zabiv.getFlavours(); //достаем из забивки лист табаков
+                if (listTobacco.size() == 1){ //проверяем сколько табаков в забивке
                     log.info("listTobacco.size() == 1");
-                    zabiv.setId1(listTobacco.get(0).getId());
-                    zabiv.setId2(-1);
-                    zabiv.setId3(-1);
+                    zabiv.setId1(listTobacco.get(0).getId()); //если табак есть, сохраняем его номер
+                    zabiv.setId2(0);   //если табака нет - сохраняем 0
+                    zabiv.setId3(0);
                 } else if (listTobacco.size() == 2) {
                         log.info("listTobacco.size() == 2");
                         zabiv.setId1(listTobacco.get(0).getId());
                         zabiv.setId2(listTobacco.get(1).getId());
-                        zabiv.setId3(-1);
+                        zabiv.setId3(0);
                     }
                     else if (listTobacco.size() == 3) {
                         log.info("listTobacco.size() == 3");
@@ -92,9 +92,9 @@ public class OrderController {
                             zabiv.setId3(listTobacco.get(2).getId());
                     } else{
                     log.info("listTobacco.size() == 0");
-                    zabiv.setId1(-1);
-                    zabiv.setId2(-1);
-                    zabiv.setId3(-1);
+                    zabiv.setId1(0);
+                    zabiv.setId2(0);
+                    zabiv.setId3(0);
                 }
                 listZabiv.set(i,zabiv);
             }
