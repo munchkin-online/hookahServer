@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class OrderService {
-
+//    TODO: все действия с заказами должны быть здесь
+//выдавало ошибку, пока нигде не используется(скорее всего что-то связанное с @Autowired)
     @Autowired
     private OrderRepository orderRepository;
 

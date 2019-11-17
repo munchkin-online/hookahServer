@@ -56,6 +56,7 @@ public class OrderController {
         Gson gson = new Gson();
         JsonObject jsonObject = new JsonObject();
         Order order = gson.fromJson(orderJson, Order.class);
+        //получаем заказ с забивом из 3 табаков
         String message;
         int status;
         try{

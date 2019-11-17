@@ -13,9 +13,9 @@ public class Zabiv {
 
     private String name;
     private int numofflavours;
-    private int flavour1;
-    private int flavour2;
-    private int flavour3;
+    private Tobacco flavour1;
+    private Tobacco flavour2;
+    private Tobacco flavour3;
 
     public Integer getId() {
         return Id;
@@ -41,27 +41,27 @@ public class Zabiv {
         this.numofflavours = numofflavours;
     }
 
-    public int getFlavour1() {
+    public Tobacco getFlavour1() {
         return flavour1;
     }
 
-    public void setFlavour1(int flavour1) {
+    public void setFlavour1(Tobacco flavour1) {
         this.flavour1 = flavour1;
     }
 
-    public int getFlavour2() {
+    public Tobacco getFlavour2() {
         return flavour2;
     }
 
-    public void setFlavour2(int flavour2) {
+    public void setFlavour2(Tobacco flavour2) {
         this.flavour2 = flavour2;
     }
 
-    public int getFlavour3() {
+    public Tobacco getFlavour3() {
         return flavour3;
     }
 
-    public void setFlavour3(int flavour3) {
+    public void setFlavour3(Tobacco flavour3) {
         this.flavour3 = flavour3;
     }
 }
