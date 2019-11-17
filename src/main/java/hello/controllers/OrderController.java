@@ -3,24 +3,29 @@ package hello.controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import hello.entities.Order;
-import hello.helper.OrderService;
+import hello.entities.Tobacco;
+import hello.entities.Zabiv;
 import hello.helper.Status;
 import hello.repository.OrderRepository;
+import hello.repository.TobaccoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 @Slf4j
 public class OrderController {
 
     private OrderRepository orderRepository;
+    private TobaccoRepository tobaccoRepository;
     //OrderService orderService;
     @Autowired
-    public OrderController(OrderRepository orderRepository){
+    public OrderController(OrderRepository orderRepository, TobaccoRepository tobaccoRepository){
         this.orderRepository = orderRepository;
+        this.tobaccoRepository = tobaccoRepository;
     }
 
 
@@ -61,6 +66,26 @@ public class OrderController {
         int status;
         try{
             order.setStatus("new");
+            List<Zabiv> listZabiv = order.getOrder();
+            // узнаем сколько табаков в листе и их id записываем в класс
+            for (int i = 0; i < listZabiv.size(); i ++){
+                Zabiv zabiv = listZabiv.get(i);
+                List<Tobacco> listTobacco = zabiv.getFlavours();
+                if (listTobacco.size() == 1){
+                    zabiv.setId1(tobaccoRepository.findIdByFlavor(listTobacco.get(0).getFlavor()));
+                } else if (listTobacco.size() == 2) {
+                        zabiv.setId1(tobaccoRepository.findIdByFlavor(listTobacco.get(0).getFlavor()));
+                        zabiv.setId2(tobaccoRepository.findIdByFlavor(listTobacco.get(1).getFlavor()));
+                    }
+                    else if (listTobacco.size() == 3) {
+                        zabiv.setId1(tobaccoRepository.findIdByFlavor(listTobacco.get(0).getFlavor()));
+                        zabiv.setId2(tobaccoRepository.findIdByFlavor(listTobacco.get(1).getFlavor()));
+                        zabiv.setId3(tobaccoRepository.findIdByFlavor(listTobacco.get(2).getFlavor()));
+                    }
+                listZabiv.set(i,zabiv);
+            }
+            order.setOrder(listZabiv);
+
             orderRepository.save(order);
             log.info("add order to database");
             message = "add order to database";
