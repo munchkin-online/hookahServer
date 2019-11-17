@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,6 +30,8 @@ public class OrderController {
         this.tobaccoRepository = tobaccoRepository;
     }
 
+    private Gson gson = new Gson();
+
 
     @PostMapping("/order/add")
     public String add(@RequestBody String orderJson){
@@ -39,7 +43,7 @@ public class OrderController {
     public String getListOfOrders(){
         log.info("request to get all tobaccos");
 //        TODO: возвращать все заказы со статусом не в работе
-        return "getList";
+        return getOrderList();
     }
     // new - заказ создан; work - заказ в работе; end - работа с заказом выполнена
 
@@ -58,7 +62,6 @@ public class OrderController {
     }
 
     private String addOrder(String orderJson){
-        Gson gson = new Gson();
         JsonObject jsonObject = new JsonObject();
         Order order = gson.fromJson(orderJson, Order.class);
         //получаем заказ с забивом из 3 табаков
@@ -100,6 +103,13 @@ public class OrderController {
         String jsonToClient = jsonObject.toString();
         log.info("return to client={", jsonToClient + "}");
         return jsonToClient;
+    }
+
+    private String getOrderList(){
+        List<Order> orderList = new ArrayList<>();
+        Iterable<Order> iterable = orderRepository.findAll();
+        iterable.forEach(orderList::add);
+        return gson.toJson(orderList);
     }
 
 }
