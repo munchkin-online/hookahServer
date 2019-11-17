@@ -109,6 +109,30 @@ public class OrderController {
         List<Order> orderList = new ArrayList<>();
         Iterable<Order> iterable = orderRepository.findAll();
         iterable.forEach(orderList::add);
+        for (int i = 0; i < orderList.size(); i++) {
+            Order order = orderList.get(i);
+            List<Zabiv> listZabiv = order.getOrder();
+            for (int j = 0; j < listZabiv.size(); j++) {
+                Zabiv zabiv = listZabiv.get(j);
+                List<Tobacco> listTobacco = zabiv.getFlavours();
+                if (!zabiv.getFlavour1().isEmpty()){
+                    Tobacco tobacco = tobaccoRepository.findByFlavor(zabiv.getFlavour1());
+                    listTobacco.add(tobacco);
+                }
+                if (!zabiv.getFlavour2().isEmpty()){
+                    Tobacco tobacco = tobaccoRepository.findByFlavor(zabiv.getFlavour2());
+                    listTobacco.add(tobacco);
+                }
+                if (!zabiv.getFlavour3().isEmpty()){
+                    Tobacco tobacco = tobaccoRepository.findByFlavor(zabiv.getFlavour3());
+                    listTobacco.add(tobacco);
+                }
+                zabiv.setFlavours(listTobacco);
+                listZabiv.set(j,zabiv);
+            }
+            order.setOrder(listZabiv);
+            orderList.set(i,order);
+        }
         return gson.toJson(orderList);
     }
 
