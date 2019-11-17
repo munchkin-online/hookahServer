@@ -150,7 +150,8 @@ public class OrderController {
             order.setOrder(listZabiv);
             orderList.set(i,order);
         }
-        return gson.toJson(orderList);
+        Order order1 = orderList.get(0);//никита попросил возвращать просто класс
+        return gson.toJson(order1);
     }
 
 }

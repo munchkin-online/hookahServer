@@ -12,6 +12,7 @@ import java.util.List;
 public class Zabiv {
     @Transient
     private List<Tobacco> flavours = new ArrayList<>();
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;

@@ -8,13 +8,15 @@ import java.util.*;
 @Entity
 @Table(name = "order", schema = "hookah")
 public class Order {
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    private List<Zabiv> order = new ArrayList<>();
-
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
+
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<Zabiv> order = new ArrayList<>();
 
     private int cost;
     @Column(name = "guestname")
