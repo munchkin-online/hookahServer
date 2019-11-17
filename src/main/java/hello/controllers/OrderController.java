@@ -72,15 +72,15 @@ public class OrderController {
                 Zabiv zabiv = listZabiv.get(i);
                 List<Tobacco> listTobacco = zabiv.getFlavours();
                 if (listTobacco.size() == 1){
-                    zabiv.setId1(tobaccoRepository.findIdByFlavor(listTobacco.get(0).getFlavor()));
+                    zabiv.setFlavour1(listTobacco.get(0).getFlavor());
                 } else if (listTobacco.size() == 2) {
-                        zabiv.setId1(tobaccoRepository.findIdByFlavor(listTobacco.get(0).getFlavor()));
-                        zabiv.setId2(tobaccoRepository.findIdByFlavor(listTobacco.get(1).getFlavor()));
+                        zabiv.setFlavour1(listTobacco.get(0).getFlavor());
+                        zabiv.setFlavour2(listTobacco.get(1).getFlavor());
                     }
                     else if (listTobacco.size() == 3) {
-                        zabiv.setId1(tobaccoRepository.findIdByFlavor(listTobacco.get(0).getFlavor()));
-                        zabiv.setId2(tobaccoRepository.findIdByFlavor(listTobacco.get(1).getFlavor()));
-                        zabiv.setId3(tobaccoRepository.findIdByFlavor(listTobacco.get(2).getFlavor()));
+                            zabiv.setFlavour1(listTobacco.get(0).getFlavor());
+                            zabiv.setFlavour2(listTobacco.get(1).getFlavor());
+                            zabiv.setFlavour3(listTobacco.get(2).getFlavor());
                     }
                 listZabiv.set(i,zabiv);
             }

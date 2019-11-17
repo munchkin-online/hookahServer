@@ -19,11 +19,11 @@ public class Zabiv {
     @Transient
     private List<Tobacco> flavours = new ArrayList<>();
     @Expose
-    private int id1;
+    private String flavour1;
     @Expose
-    private int id2;
+    private String flavour2;
     @Expose
-    private int id3;
+    private String flavour3;
 
 
     public Integer getId() {
@@ -50,28 +50,28 @@ public class Zabiv {
         this.flavours = flavours;
     }
 
-    public int getId1() {
-        return id1;
+    public String getFlavour1() {
+        return flavour1;
     }
 
-    public void setId1(int id1) {
-        this.id1 = id1;
+    public void setFlavour1(String flavour1) {
+        this.flavour1 = flavour1;
     }
 
-    public int getId2() {
-        return id2;
+    public String getFlavour2() {
+        return flavour2;
     }
 
-    public void setId2(int id2) {
-        this.id2 = id2;
+    public void setFlavour2(String flavour2) {
+        this.flavour2 = flavour2;
     }
 
-    public int getId3() {
-        return id3;
+    public String getFlavour3() {
+        return flavour3;
     }
 
-    public void setId3(int id3) {
-        this.id3 = id3;
+    public void setFlavour3(String flavour3) {
+        this.flavour3 = flavour3;
     }
 }
 
