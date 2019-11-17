@@ -10,14 +10,14 @@ import java.util.List;
 @Entity
 @Table(name = "zabiv", schema = "hookah")
 public class Zabiv {
-
+    @Transient
+    private List<Tobacco> flavours = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
     private String name;
-    @Transient
-    private List<Tobacco> flavours = new ArrayList<>();
+
     @Expose
     private int id1;
     @Expose

@@ -8,6 +8,9 @@ import java.util.*;
 @Entity
 @Table(name = "order", schema = "hookah")
 public class Order {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<Zabiv> order = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +20,7 @@ public class Order {
     @Column(name = "guestname")
     private String guestName;
     private String comments;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    private List<Zabiv> order = new ArrayList<>();
+
     @Expose
     private String status;
 
