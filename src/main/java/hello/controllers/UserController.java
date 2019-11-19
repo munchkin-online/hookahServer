@@ -34,11 +34,13 @@ public class UserController {
 
     @PostMapping("/user/info")
     public String info(@RequestBody String infoJson){
+        log.info("user info request, info={}",infoJson);
         return userService.getUserInfo(infoJson);
     }
 
     @PostMapping("/user/status")
-    public String status(@RequestBody String statusJson){
-        return null;
+    public String status(@RequestBody String roleJson){
+        log.info("user role update request, info={}",roleJson);
+        return userService.changeUserRole(roleJson);
     }
 }

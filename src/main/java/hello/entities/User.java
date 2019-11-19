@@ -14,10 +14,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
+    @Expose
     private String username;
+    @Expose(serialize = false, deserialize = true)
     private String password;
     @Column(name = "email")
+    @Expose
     private String mail;
+    @Expose
     private boolean active;
     @Expose
     private String role;
