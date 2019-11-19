@@ -1,6 +1,5 @@
 package hello.entities;
 
-import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +12,7 @@ public class Tobacco {
     private String label;
     private int strength;
     private String category;
-    private String flavor;
+    private String flavour;
 
     public Integer getId() {
         return Id;
@@ -47,11 +46,11 @@ public class Tobacco {
         this.category = category;
     }
 
-    public String getFlavor() {
-        return flavor;
+    public String getFlavour() {
+        return flavour;
     }
 
-    public void setFlavor(String flavor) {
-        this.flavor = flavor;
+    public void setFlavour(String flavour) {
+        this.flavour = flavour;
     }
 }
