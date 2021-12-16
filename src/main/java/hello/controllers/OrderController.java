@@ -49,6 +49,7 @@ public class OrderController {
 
     @PostMapping("/order/info")
     public String info(@RequestBody String orderJson){
+        log.info("NEw commit test");
         log.info("request to get info about order, info = {" + orderJson + "}");
 //        TODO: возвращать всю информацию о конкретном заказе
         return "info";
